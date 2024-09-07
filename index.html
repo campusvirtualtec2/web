@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Campus Virtual</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        #informacion {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin: auto;
+        }
+        .noticia {
+            display: none;
+            padding: 10px;
+            border: 3px solid #ccc;
+            border-radius: 5px;
+            background-color: #7187f3;
+            position: relative; /* Para contener los botones dentro de la noticia */
+        }
+        .noticia.active {
+            display: block;
+        }
+        .navegacion {
+            position: absolute;
+            top: 50%;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            transform: translateY(-50%);
+            pointer-events: none; /* Permite que la imagen no interfiera con los botones */
+        }
+        .navegacion button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            pointer-events: auto; /* Permite hacer clic en los botones */
+            z-index: 10; /* Asegura que los botones se superpongan a la imagen */
+        }
+
+        /* Estilo para la sección de Mi Perfil */
+        #perfil {
+            display: none;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Campus Virtual Escolar</h1>
+        <nav>
+            <ul>
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="cursos.html">Especialidades</a></li>
+                <li><a href="contacto.html">Contacto</a></li>
+                <li><a href="calendario.html">Calendario</a></li>
+                <li><a href="perfil.html">Mi perfil</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <h2>Le damos la bienvenida al Campus Virtual</h2>
+        <p>Aquí puedes encontrar todos los recursos necesarios para tu educación.</p>
+        
+       <!-- Panel Informativo -->
+       <section id="panel-informativo">
+           <h3>Panel Informativo</h3>
+           <div id="informacion" aria-live="polite">
+               <div class="noticia active">
+                   <img src="WhatsApp Image 2024-08-31 at 23.48.57.jpeg" alt="Presentación EnigmaTec2" style="width:50%;">
+                   <p>El día viernes 30/08 los chicos del Proyecto EnigmaTec2 realizaron su primera presentación</p>
+               </div>
+               <div class="noticia">
+                   <p>Noticia 2: Información adicional.</p>
+               </div>
+               <div class="noticia">
+                   <p>Noticia 3: Otra información relevante.</p>
+               </div>
+           </div>
+           <div class="navegacion">
+               <button id="anterior" onclick="cambiarNoticia(-1)">&#10094; Anterior</button>
+               <button id="siguiente" onclick="cambiarNoticia(1)">Siguiente &#10095;</button>
+           </div>
+       </section>
+
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Campus Virtual Escolar</p>
+    </footer>
+    
+    <script>
+        let noticiaActual = 0;
+        const intervaloCambio = 3500; // 3 segundos y medio en milisegundos
+        let intervaloId;
+
+        function cambiarNoticia(direccion) {
+            const noticias = document.querySelectorAll('#informacion .noticia');
+            noticias[noticiaActual].classList.remove('active');
+            
+            noticiaActual += direccion;
+            
+            if (noticiaActual >= noticias.length) {
+                noticiaActual = 0;
+            } else if (noticiaActual < 0) {
+                noticiaActual = noticias.length - 1;
+            }
+            
+            noticias[noticiaActual].classList.add('active');
+        }
+
+        function iniciarIntervalo() {
+            intervaloId = setInterval(() => {
+                cambiarNoticia(1); // Cambia a la siguiente noticia
+            }, intervaloCambio);
+        }
+
+        function detenerIntervalo() {
+            clearInterval(intervaloId);
+        }
+
+        // Iniciar el intervalo automáticamente al cargar
+        iniciarIntervalo();
+
+        // Agregar eventos para pausar y reanudar el intervalo al interactuar con los botones
+        const botonesNavegacion = document.querySelectorAll('.navegacion button');
+        botonesNavegacion.forEach(boton => {
+            boton.addEventListener('mouseover', detenerIntervalo);
+            boton.addEventListener('mouseout', iniciarIntervalo);
+        });
+
+        
+
+        // Mostrar la sección "Mi Perfil" si se ha iniciado sesión
+        function mostrarPerfil() {
+            const usuarioConectado = true; // Simulación de usuario conectado
+            if (usuarioConectado) {
+                document.getElementById("perfil").style.display = 'block';
+                cargarDatosPerfil();
+            }
+        }
+
+        function cargarDatosPerfil() {
+            const modalidadSeleccionada = "Informática";
+            document.getElementById("modalidad").innerText = modalidadSeleccionada;
+
+            const cursoDropdown = document.getElementById("curso");
+            if (modalidadSeleccionada === "Informática") {
+                const option = document.createElement("option");
+                option.value = "6to10ma";
+                option.text = "6to10ma";
+                cursoDropdown.add(option);
+            }
+
+            cargarCalendario();
+        }
+
+        function cargarCalendario() {
+            document.getElementById("calendario").innerHTML = "<iframe src='https://calendar.google.com/calendar/embed?src=tu_correo%40gmail.com&ctz=America%2FArgentina%2FBuenos_Aires' style='border: 0' width='100%' height='600' frameborder='0' scrolling='no'></iframe>";
+        }
+
+        function actualizarHorarios() {
+            const cursoSeleccionado = document.getElementById("curso").value;
+            if (cursoSeleccionado === "6to10ma") {
+                document.getElementById("horarios").innerText = `
+                Lunes:
+                Lab. De S.O(12:50 a 17:00)
+                Literatura(17:30 a 19:10)
+                Sistemas Digitales(19:20 a 21:50)
+
+                Martes:
+                Lab. de Aplicaciones y Programación(12:50 a 17:00)
+                Investigación Operativa(17:30 a 18:20)
+                Matemáticas (18:20 a 20:10)
+
+                Miércoles:
+                Derechos del trabajo(17:30 a 19:10)
+                Investigación Operativa(19:20 a 21:00)
+                Seguridad Informática(21:00 a 21:50)
+
+                Jueves:
+                Ed. Fisica (12:50 a 14:50)
+                Arte(17:30 a 19:10)
+                Filosofía(19:20 a 21:00)
+
+                Viernes:
+                Lab. de Hardware(12:50 a 17:00)
+                Inglés(17:30 a 19:10)
+                Seguridad Informática(19:20 a 21:00)
+                `;
+            }
+        }
+
+        // Llamar a la función para mostrar perfil
+        mostrarPerfil();
+    </script>
+</body>
+</html>

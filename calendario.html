@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calendario con FullCalendar</title>
+    
+    <!-- FullCalendar CSS -->
+    <link href='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.css' rel='stylesheet' />
+    <style>
+        /* Estilo básico para el botón */
+        .boton-volver {
+            display: inline-block;
+            padding: 10px 20px;
+            font-size: 16px;
+            color: white;
+            background-color: #007bff; /* Color del botón */
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .boton-volver:hover {
+            background-color: #0056b3; /* Color más oscuro al pasar el ratón */
+        }
+    </style>
+</head>
+<body>
+    <a href="index.html" class="boton-volver">Volver a Inicio</a>
+    
+    <h1>Calendario de Eventos</h1>
+    
+    <!-- Contenedor para el calendario -->
+    <div id="calendar"></div>
+    
+    <!-- FullCalendar JS -->
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.js'></script>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var calendarEl = document.getElementById('calendar');
+
+            var calendar = new FullCalendar.Calendar(calendarEl, {
+                initialView: 'dayGridMonth', // Vista inicial (mes)
+                events: [ // Ejemplos de eventos
+                    {
+                        title: 'Evento ejemplo 1',
+                        start: '2024-08-01'
+                    },
+                    {
+                        title: 'Evento ejemplo 2',
+                        start: '2024-08-05',
+                        end: '2024-08-07'
+                    },
+                    {
+                        title: 'Evento 3',
+                        start: '2024-08-09T16:00:00'
+                    }
+                ]
+            });
+
+            calendar.render(); // Renderiza el calendario
+        });
+    </script>
+</body>
+</html>
