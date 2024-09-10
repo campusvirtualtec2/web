@@ -6,39 +6,7 @@
     <title>Campus Virtual</title>
     <link rel="stylesheet" href="styles.css">
     <style>
-        /* Pantalla de carga */
-        #pantalla-carga {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(255, 255, 255, 0.9);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 9999;
-        }
-
-        /* Animación de crecimiento y reducción */
-        @keyframes agrandarAchicar {
-            0% {
-                transform: scale(2);
-            }
-            50% {
-                transform: scale(2.3); /* Aumentar el tamaño */
-            }
-            100% {
-                transform: scale(2); /* Volver al tamaño original */
-            }
-        }
-
-        #pantalla-carga img {
-            width: 150px;
-            animation: agrandarAchicar 2s infinite; /* Aplicar la animación */
-        }
-
-        /* Otros estilos */
+        /* Estilos para la sección de noticias */
         #informacion {
             position: relative;
             width: 100%;
@@ -51,19 +19,14 @@
             border: 3px solid #ccc;
             border-radius: 5px;
             background-color: #7187f3;
-            position: relative;
         }
         .noticia.active {
             display: block;
         }
         .navegacion {
-            position: absolute;
-            top: 50%;
-            width: 100%;
             display: flex;
             justify-content: space-between;
-            transform: translateY(-50%);
-            pointer-events: none;
+            margin-top: 10px;
         }
         .navegacion button {
             background-color: #007bff;
@@ -72,186 +35,317 @@
             padding: 10px;
             border-radius: 5px;
             cursor: pointer;
-            pointer-events: auto;
-            z-index: 10;
         }
 
+        /* Estilos para el rectángulo con secciones */
+        #modalidades {
+            display: flex;
+            justify-content: space-around;
+            margin: 20px auto;
+            padding: 20px;
+            border: 2px solid #ccc;
+            border-radius: 10px;
+            background-color: #eaeaea;
+            max-width: 800px;
+        }
+
+        .seccion {
+            text-align: center;
+        }
+
+        .seccion h3 {
+            margin-bottom: 10px;
+        }
+
+        .seccion button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+
+        /* Estilos para el modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.4);
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 400px;
+            border-radius: 10px;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        /* Estilos para "Mi Perfil" */
         #perfil {
             display: none;
+            max-width: 800px;
+            margin: 20px auto;
             padding: 20px;
-            border: 1px solid #ccc;
+            border: 2px solid #ccc;
+            border-radius: 10px;
+            background-color: #eaeaea;
+        }
+
+        #perfil h3 {
+            margin-bottom: 15px;
+        }
+
+        #perfil .seccion-perfil {
+            margin-bottom: 20px;
+        }
+
+        /* Calendario */
+        #calendario {
+            border: 2px solid #ccc;
             border-radius: 5px;
-            background-color: #f9f9f9;
+            padding: 10px;
+            background-color: #fff;
         }
     </style>
 </head>
 <body>
-
-    <!-- Pantalla de carga -->
-    <div id="pantalla-carga">
-        <img src="logocampus.png" alt="Logo Campus">
-    </div>
-
     <header>
         <h1>Campus Virtual Escolar</h1>
         <nav>
             <ul>
                 <li><a href="index.html">Inicio</a></li>
-                <li><a href="cursos.html">Especialidades</a></li>
+                <li id="especialidades"><a href="cursos.html">Especialidades</a></li>
                 <li><a href="contacto.html">Contacto</a></li>
                 <li><a href="calendario.html">Calendario</a></li>
-                
             </ul>
         </nav>
     </header>
     <main>
-        <h2>Le damos la bienvenida al Campus Virtual</h2>
+        <h2>Les damos la Bienvenida</h2>
+        <p>Seleccione su Modalidad</p>
 
-        <!-- Panel Informativo -->
-        <section id="panel-informativo">
-            <div id="informacion" aria-live="polite">
-                <div class="noticia active">
-                    <img src="WhatsApp Image 2024-08-31 at 23.48.57.jpeg" alt="Presentación EnigmaTec2" style="width:50%;">
-                    <p>El día Viernes 30/08 los chicos del Proyecto EnigmaTec2 realizaron su primera presentación</p>
-                </div>
-                <div class="noticia">
-                    <img src="WhatsApp Image 2024-09-08 at 00.06.07.jpeg" alt="Presentación EnigmaTec2" style="width:50%;">
-                    <p>El día Jueves 05/09 los chicos del Proyecto EnigmaTec2 realizaron su segunda presentación en la Expo Joven realizada en el Instituto Santa Lucia</p>
-                </div>
-                <div class="noticia">
-                    <p>La correcaminatas se realizará el 13 de septiembre.</p>
-                </div>
+        <!-- Rectángulo con secciones -->
+        <div id="modalidades">
+            <div class="seccion">
+                <h3>Ciclo Básico</h3>
+                <button onclick="abrirModal('Ciclo Básico', 'Iniciar Sesión')">Iniciar Sesión</button>
+                <button onclick="abrirModal('Ciclo Básico', 'Registrarse')">Registrarse</button>
             </div>
-            <div class="navegacion">
-                <button id="anterior" onclick="cambiarNoticia(-1)">&#10094; Anterior</button>
-                <button id="siguiente" onclick="cambiarNoticia(1)">Siguiente &#10095;</button>
+            <div class="seccion">
+                <h3>Informática</h3>
+                <button onclick="abrirModal('Informática', 'Iniciar Sesión')">Iniciar Sesión</button>
+                <button onclick="abrirModal('Informática', 'Registrarse')">Registrarse</button>
             </div>
-        </section>
+            <div class="seccion">
+                <h3>Maestro Mayor de Obras</h3>
+                <button onclick="abrirModal('Maestro Mayor de Obras', 'Iniciar Sesión')">Iniciar Sesión</button>
+                <button onclick="abrirModal('Maestro Mayor de Obras', 'Registrarse')">Registrarse</button>
+            </div>
+            <div class="seccion">
+                <h3>Química</h3>
+                <button onclick="abrirModal('Química', 'Iniciar Sesión')">Iniciar Sesión</button>
+                <button onclick="abrirModal('Química', 'Registrarse')">Registrarse</button>
+            </div>
+        </div>
 
+        <!-- Sección "Mi Perfil" -->
+        <div id="perfil">
+            <h2>Mi Perfil</h2>
+            <div class="seccion-perfil">
+                <h3>Modalidad:</h3>
+                <p id="modalidad"></p>
+            </div>
+            <div class="seccion-perfil">
+                <h3>Curso:</h3>
+                <select id="curso" onchange="actualizarHorarios()">
+                    <option value="">Seleccionar curso</option>
+                </select>
+            </div>
+            <div class="seccion-perfil">
+                <h3>Mis horarios:</h3>
+                <p id="horarios"></p>
+            </div>
+            <div class="seccion-perfil">
+                <h3>Mi agenda:</h3>
+                <div id="calendario"></div>
+            </div>
+        </div>
+        
     </main>
 
-    <footer>
-        <p>&copy; 2024 Campus Virtual Escolar</p>
-    </footer>
+    <!-- Modal -->
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="cerrarModal()">&times;</span>
+            <h2 id="modal-titulo"></h2>
+            <form id="formulario" onsubmit="return false;">
+                <!-- Formulario dinámico según la acción (Iniciar Sesión o Registrarse) -->
+            </form>
+        </div>
+    </div>
 
     <script>
-        let noticiaActual = 0;
-        const intervaloCambio = 3500;
-        let intervaloId;
+        function abrirModal(titulo, accion) {
+    document.getElementById("modal-titulo").innerText = `${accion} - ${titulo}`;
+    let formularioHTML = '';
+    if (accion === 'Registrarse') {
+        formularioHTML = `
+            <label for="usuario">Usuario:</label>
+            <input type="text" id="usuario" name="usuario" required><br><br>
+            <label for="password">Contraseña:</label>
+            <input type="password" id="password" name="password" required><br><br>
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required><br><br>
+            <button type="submit" onclick="registrarUsuario(event)">Registrarse</button>`;
+    } else {
+        formularioHTML = `
+            <label for="usuario">Usuario:</label>
+            <input type="text" id="usuario" name="usuario" required><br><br>
+            <label for="password">Contraseña:</label>
+            <input type="password" id="password" name="password" required><br><br>
+            <button type="submit" onclick="iniciarSesion(event)">Iniciar Sesión</button>`;
+    }
+    document.getElementById("formulario").innerHTML = formularioHTML;
+    document.getElementById("modal").style.display = "block";
+}
 
-        function cambiarNoticia(direccion) {
-            const noticias = document.querySelectorAll('#informacion .noticia');
-            noticias[noticiaActual].classList.remove('active');
-            
-            noticiaActual += direccion;
-            
-            if (noticiaActual >= noticias.length) {
-                noticiaActual = 0;
-            } else if (noticiaActual < 0) {
-                noticiaActual = noticias.length - 1;
-            }
-            
-            noticias[noticiaActual].classList.add('active');
+function registrarUsuario(event) {
+    event.preventDefault();
+    const usuario = document.getElementById('usuario').value;
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
+
+    fetch('/register', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ username: usuario, email, password })
+    }).then(response => {
+        if (response.ok) {
+            alert('Registro exitoso. Revisa tu correo para la confirmación.');
+            cerrarModal();
+        } else {
+            alert('Error en el registro');
         }
+    }).catch(err => {
+        console.error('Error en la solicitud:', err);
+        alert('Error en el registro');
+    });
+}
 
-        function iniciarIntervalo() {
-            intervaloId = setInterval(() => {
-                cambiarNoticia(1);
-            }, intervaloCambio);
+function iniciarSesion(event) {
+    event.preventDefault();
+    const usuario = document.getElementById('usuario').value;
+    const password = document.getElementById('password').value;
+
+    fetch('/login', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ username: usuario, password })
+    }).then(response => {
+        if (response.ok) {
+            alert('Inicio de sesión exitoso');
+            cambiarAPerfil();
+            cerrarModal();
+        } else {
+            alert('Usuario o contraseña incorrectos');
         }
+    }).catch(err => {
+        console.error('Error en la solicitud:', err);
+        alert('Error en el inicio de sesión');
+    });
+}
 
-        function detenerIntervalo() {
-            clearInterval(intervaloId);
-        }
+function cambiarAPerfil() {
+    document.getElementById("especialidades").innerHTML = '<a href="perfil.html">Mi Perfil</a>';
+    document.getElementById("modalidades").style.display = 'none';
+    document.getElementById("perfil").style.display = 'block';
+    cargarDatosPerfil();  // Función para cargar los datos de perfil
+}
 
-        // Pantalla de carga
-        window.addEventListener("load", function() {
-            const pantallaCarga = document.getElementById('pantalla-carga');
-            
-            // Verificar si es la primera vez que se carga el index.html en la sesión
-            if (!sessionStorage.getItem('visitado')) {
-                detenerIntervalo(); // Detener el cambio automático de noticias
+function cargarDatosPerfil() {
+    const modalidadSeleccionada = "Informática"; // Esto debería ser dinámico según la modalidad seleccionada
+    document.getElementById("modalidad").innerText = modalidadSeleccionada;
+    
+    const cursoDropdown = document.getElementById("curso");
+    if (modalidadSeleccionada === "Informática") {
+        const option = document.createElement("option");
+        option.value = "6to10ma";
+        option.text = "6to10ma";
+        cursoDropdown.add(option);
+    }
 
-                // Mantener la pantalla de carga visible al menos 3 segundos
-                setTimeout(function() {
-                    pantallaCarga.style.display = 'none'; // Ocultar la pantalla de carga
-                    iniciarIntervalo(); // Iniciar el cambio automático de noticias después de que desaparezca la pantalla de carga
-                    sessionStorage.setItem('visitado', 'true'); // Guardar en sessionStorage que ya se visitó
-                }, 5000); // 5000 milisegundos = 5 segundos
-            } else {
-                // Si ya se ha visitado, ocultar inmediatamente la pantalla de carga
-                pantallaCarga.style.display = 'none';
-            }
-        });
+    cargarCalendario(); // Cargar el calendario con API
+}
 
-        iniciarIntervalo(); // Iniciar el intervalo por defecto al cargar la página
+function cargarCalendario() {
+    // Ejemplo de uso de Google Calendar API (debes insertar tu propio enlace de calendario)
+    document.getElementById("calendario").innerHTML = "<iframe src='https://calendar.google.com/calendar/embed?src=tu_correo%40gmail.com&ctz=America%2FArgentina%2FBuenos_Aires' style='border: 0' width='100%' height='600' frameborder='0' scrolling='no'></iframe>";
+}
 
-        const botonesNavegacion = document.querySelectorAll('.navegacion button');
-        botonesNavegacion.forEach(boton => {
-            boton.addEventListener('mouseover', detenerIntervalo);
-            boton.addEventListener('mouseout', iniciarIntervalo);
-        });
+function actualizarHorarios() {
+    const cursoSeleccionado = document.getElementById("curso").value;
+    if (cursoSeleccionado === "6to10ma") {
+        document.getElementById("horarios").innerText = `
+        Lunes:
+        Lab. De S.O(12:50 a 17:00)
+        Literatura(17:30 a 19:10)
+        Sistemas Digitales(19:20 a 21:50)
+        
+        Martes:
+        Lab. de Aplicaciones y Programación(12:50 a 17:00)
+        Investigación Operativa(17:30 a 18:20)
+        Matemáticas (18:20 a 20:10)
+        
+        Miércoles:
+        Derechos del trabajo(17:30 a 19:10)
+        Investigación Operativa(19:20 a 21:00)
+        Seguridad Informática(21:00 a 21:50)
+        
+        Jueves:
+        Ed. Fisica (12:50 a 14:50)
+        Arte(17:30 a 19:10)
+        Filosofía(19:20 a 21:00)
+        
+        Viernes:
+        Lab. de Hardware(12:50 a 17:00)
+        Inglés(17:30 a 19:10)
+        Seguridad Informática(19:20 a 21:00)
+        `;
+    }
+}
 
-        function mostrarPerfil() {
-            const usuarioConectado = true;
-            if (usuarioConectado) {
-                document.getElementById("perfil").style.display = 'block';
-                cargarDatosPerfil();
-            }
-        }
+function cerrarModal() {
+    document.getElementById("modal").style.display = "none";
+}
 
-        function cargarDatosPerfil() {
-            const modalidadSeleccionada = "Informática";
-            document.getElementById("modalidad").innerText = modalidadSeleccionada;
-
-            const cursoDropdown = document.getElementById("curso");
-            if (modalidadSeleccionada === "Informática") {
-                const option = document.createElement("option");
-                option.value = "6to10ma";
-                option.text = "6to10ma";
-                cursoDropdown.add(option);
-            }
-
-            cargarCalendario();
-        }
-
-        function cargarCalendario() {
-            document.getElementById("calendario").innerHTML = "<iframe src='https://calendar.google.com/calendar/embed?src=tu_correo%40gmail.com&ctz=America%2FArgentina%2FBuenos_Aires' style='border: 0' width='100%' height='600' frameborder='0' scrolling='no'></iframe>";
-        }
-
-        function actualizarHorarios() {
-            const cursoSeleccionado = document.getElementById("curso").value;
-            if (cursoSeleccionado === "6to10ma") {
-                document.getElementById("horarios").innerText = `
-                Lunes:
-                Lab. De S.O (12:50 a 17:00)
-                Literatura (17:30 a 19:10)
-                Sistemas Digitales (19:20 a 21:50)
-
-                Martes:
-                Lab. de Aplicaciones y Programación (12:50 a 17:00)
-                Investigación Operativa (17:30 a 18:20)
-                Matemáticas (18:20 a 20:10)
-
-                Miércoles:
-                Derechos del trabajo (17:30 a 19:10)
-                Investigación Operativa (19:20 a 21:00)
-                Seguridad Informática (21:00 a 21:50)
-
-                Jueves:
-                Ed. Fisica (12:50 a 14:50)
-                Arte (17:30 a 19:10)
-                Filosofía (19:20 a 21:00)
-
-                Viernes:
-                Lab. de Hardware (12:50 a 17:00)
-                Inglés (17:30 a 19:10)
-                Seguridad Informática (19:20 a 21:00)
-                `;
-            }
-        }
-
-        mostrarPerfil();
-    </script>
+    </script>    
 </body>
 </html>
