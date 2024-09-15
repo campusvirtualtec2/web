@@ -6,30 +6,60 @@
     <title>Nuestros contactos</title>
     <link rel="stylesheet" href="contact_style.css">
     <style>
-        /* Estilo básico para el botón */
-        .boton-instagram {
-            display: inline-block;
-            padding: 10px 20px;
-            font-size: 16px;
-            color: white;
-            background-color: #c13584; /* Color típico de Instagram */
-            border: none;
-            border-radius: 5px;
-            text-decoration: none;
-            text-align: center;
-        }
-        .boton-instagram:hover {
-            background-color: #e4405f; /* Color más claro al pasar el ratón */
-        }
+       /* Estilo básico para el botón */
+.boton-instagram {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 16px;
+    color: white;
+    background-color: #c13584; /* Color típico de Instagram */
+    border: none;
+    border-radius: 5px;
+    text-decoration: none;
+    text-align: center;
+}
+.boton-instagram:hover {
+    background-color: #e4405f; /* Color más claro al pasar el ratón */
+}
 
-        /* Estilo para la sección de Mi Perfil */
-        #perfil {
-            display: none;
-            padding: 20px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            background-color: #f9f9f9;
-        }
+/* Estilo para la sección de Mi Perfil */
+#perfil {
+    display: none;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #007bff;
+}
+
+/* Estilo para el feed de Instagram */
+#instagram-feed {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center; /* Centra las publicaciones horizontalmente */
+    gap: 10px; /* Espacio entre las publicaciones */
+    padding: 20px;
+}
+
+.post {
+    max-width: 500px; /* Tamaño máximo de las publicaciones */
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    overflow: hidden;
+    background-color: #7187f3;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.post img, .post video {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.post p {
+    margin: 10px;
+}
+
     </style>
 </head>
 <body>
@@ -49,70 +79,50 @@
         <a href="http://www.instagram.com/campus.tec2.fv?igsh=cDN5ZmtmcWRuZmln" class="boton-instagram" target="_blank">Síguenos en Instagram</a>
     </main>
 
+    <div id="instagram-feed"></div>
 
     <script>
-        // Mostrar la sección "Mi Perfil" si se ha iniciado sesión
-        function mostrarPerfil() {
-            const usuarioConectado = true; // Simulación de usuario conectado
-            if (usuarioConectado) {
-                document.getElementById("perfil").style.display = 'block';
-                cargarDatosPerfil();
-            }
+        const accessToken = 'IGQWRQNXNKMFZAMYzlYd2dCNU5pTDRUb2ktSDBQbG5KbXo0REwyTXJiM2hhUVpxQk1GNDFBeFoyWFozcVFFVXlmdVlEY3lzNGJFcnFuR1IzbWNOYnlxSTZA2Mzd1NVkzSjJxb2FSYnhtWGc0VER2c0pHamlXbmNVZAXMZD'; // Coloca aquí tu token de acceso
+        const userId = '17841468835962937'; // ID del usuario de Instagram
+
+        // Función para obtener las publicaciones
+        async function obtenerPublicaciones() {
+            const response = await fetch(`https://graph.instagram.com/${userId}/media?fields=id,caption,media_type,media_url,permalink,timestamp,username&access_token=${accessToken}`);
+            const data = await response.json();
+            
+            const feed = document.getElementById('instagram-feed');
+            
+            data.data.forEach(post => {
+                const postElement = document.createElement('div');
+                postElement.classList.add('post');
+
+                // Verificar si el tipo de media es imagen o video
+                if (post.media_type === 'IMAGE' || post.media_type === 'CAROUSEL_ALBUM') {
+                    postElement.innerHTML = `
+                        <a href="${post.permalink}" target="_blank">
+                            <img src="${post.media_url}" alt="${post.caption}">
+                        </a>
+                        <p>${post.caption || ''}</p>
+                        <p>Publicado el: ${new Date(post.timestamp).toLocaleDateString()}</p>
+                    `;
+                } else if (post.media_type === 'VIDEO') {
+                    postElement.innerHTML = `
+                        <a href="${post.permalink}" target="_blank">
+                            <video width="500" controls>
+                                <source src="${post.media_url}" type="video/mp4">
+                                Tu navegador no soporta el elemento de video.
+                            </video>
+                        </a>
+                        <p>${post.caption || ''}</p>
+                        <p>Publicado el: ${new Date(post.timestamp).toLocaleDateString()}</p>
+                    `;
+                }
+
+                feed.appendChild(postElement);
+            });
         }
 
-        function cargarDatosPerfil() {
-            const modalidadSeleccionada = "Informática";
-            document.getElementById("modalidad").innerText = modalidadSeleccionada;
-
-            const cursoDropdown = document.getElementById("curso");
-            if (modalidadSeleccionada === "Informática") {
-                const option = document.createElement("option");
-                option.value = "6to10ma";
-                option.text = "6to10ma";
-                cursoDropdown.add(option);
-            }
-
-            cargarCalendario();
-        }
-
-        function cargarCalendario() {
-            document.getElementById("calendario").innerHTML = "<iframe src='https://calendar.google.com/calendar/embed?src=tu_correo%40gmail.com&ctz=America%2FArgentina%2FBuenos_Aires' style='border: 0' width='100%' height='600' frameborder='0' scrolling='no'></iframe>";
-        }
-
-        function actualizarHorarios() {
-            const cursoSeleccionado = document.getElementById("curso").value;
-            if (cursoSeleccionado === "6to10ma") {
-                document.getElementById("horarios").innerText = `
-                Lunes:
-                Lab. De S.O(12:50 a 17:00)
-                Literatura(17:30 a 19:10)
-                Sistemas Digitales(19:20 a 21:50)
-
-                Martes:
-                Lab. de Aplicaciones y Programación(12:50 a 17:00)
-                Investigación Operativa(17:30 a 18:20)
-                Matemáticas (18:20 a 20:10)
-
-                Miércoles:
-                Derechos del trabajo(17:30 a 19:10)
-                Investigación Operativa(19:20 a 21:00)
-                Seguridad Informática(21:00 a 21:50)
-
-                Jueves:
-                Ed. Fisica (12:50 a 14:50)
-                Arte(17:30 a 19:10)
-                Filosofía(19:20 a 21:00)
-
-                Viernes:
-                Lab. de Hardware(12:50 a 17:00)
-                Inglés(17:30 a 19:10)
-                Seguridad Informática(19:20 a 21:00)
-                `;
-            }
-        }
-
-        // Llamar a la función para mostrar perfil
-        mostrarPerfil();
+        obtenerPublicaciones();
     </script>
 </body>
 </html>
