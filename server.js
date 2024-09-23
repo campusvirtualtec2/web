@@ -2,11 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const nodemailer = require('nodemailer');
-const dotenv = require('dotenv');
 const path = require('path'); // Importar el módulo path
-
-// Configuración de dotenv
-dotenv.config();
 
 // Crear una instancia de Express
 const app = express();
@@ -18,6 +14,7 @@ const mongoURI = 'mongodb+srv://Zozayaboi:Falcone132@server.y3ir6.mongodb.net/?r
 mongoose.connect(mongoURI)
     .then(() => console.log('Conectado a MongoDB'))
     .catch(err => console.error('Error al conectar a MongoDB', err));
+
 // Definir el esquema y modelo de usuario
 const userSchema = new mongoose.Schema({
     username: { type: String, required: true, unique: true },
@@ -31,20 +28,21 @@ const User = mongoose.model('User', userSchema);
 app.post('/register', async (req, res) => {
     const { username, email, password } = req.body;
 
-    // Encriptar la contraseña
-    const hashedPassword = await bcrypt.hash(password, 10);
-
-    const newUser = new User({
-        username,
-        email,
-        password: hashedPassword,
-    });
-
     try {
+        // Encriptar la contraseña
+        const hashedPassword = await bcrypt.hash(password, 10);
+
+        const newUser = new User({
+            username,
+            email,
+            password: hashedPassword,
+        });
+
         await newUser.save();
-        sendConfirmationEmail(email);  // Enviar email de confirmación
+        sendConfirmationEmail(email);  // Enviar email de confirmación al correo del usuario registrado
         res.status(201).send('Usuario registrado correctamente');
     } catch (err) {
+        console.error('Error al registrar el usuario', err);
         res.status(400).send('Error al registrar el usuario');
     }
 });
@@ -58,25 +56,25 @@ app.post('/login', async (req, res) => {
     if (user && (await bcrypt.compare(password, user.password))) {
         res.status(200).send('Inicio de sesión exitoso');
     } else {
-        res.status(400).send('Usuario o contraseña incorrectos');
+        res.status(400).send('Usuario y/o contraseña incorrectos');
     }
 });
 
 // Envío de email de confirmación
 function sendConfirmationEmail(email) {
     const transporter = nodemailer.createTransport({
-        service: 'Gmail',
+        service: 'Hotmail',
         auth: {
-            user: process.env.EMAIL_USER,
-            pass: process.env.EMAIL_PASS,
+            user: 'campusvirtualtec2@hotmail.com', // Credenciales directamente en el código
+            pass: 'Campus2024', // Contraseña directamente en el código
         },
     });
 
     const mailOptions = {
-        from: process.env.EMAIL_USER,
-        to: email,
+        from: 'campusvirtualtec2@hotmail.com', // El correo remitente
+        to: email, // El destinatario es el email registrado
         subject: 'Confirmación de Registro',
-        text: 'Gracias por registrarte en nuestro Campus Virtual.',
+        text: 'Gracias por registrarte en Walsh, nuestro Campus Virtual.',
     };
 
     transporter.sendMail(mailOptions, (error, info) => {
@@ -88,6 +86,7 @@ function sendConfirmationEmail(email) {
     });
 }
 
+// Escuchar en el puerto 3000
 app.listen(3000, () => {
     console.log('Servidor en ejecución en http://localhost:3000');
 });
