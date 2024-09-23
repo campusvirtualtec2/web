@@ -1,13 +1,13 @@
+/* General Styles */
 body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #8e8ef9;
+    background-color: #8e8ef9
 }
-
 header {
-    background-color: #5d5deb;
-    color: #fff;
+    background-color:  #007bff;
+    color: rgb(255, 255, 255);
     padding: 10px 0;
     text-align: center;
 }
@@ -17,17 +17,19 @@ header h1 {
 }
 
 nav ul {
-    list-style: none;
+    list-style-type: none;
     padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: center;
 }
 
 nav ul li {
-    display: inline;
-    margin: 0 130px;
+    margin: 0 10px;
 }
 
 nav ul li a {
-    color: #fff;
+    color: white;
     text-decoration: none;
 }
 
@@ -37,11 +39,49 @@ main {
 }
 
 footer {
-    background-color: #5d5deb;
-    color: #fff;
+    background-color: #007bff;
+    color: white;
     text-align: center;
     padding: 10px 0;
     position: fixed;
-    bottom: 0;
     width: 100%;
+    bottom: 0;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    nav ul {
+        flex-direction: column;
+    }
+
+    nav ul li {
+        margin: 5px 0;
+    }
+
+    #informacion {
+        max-width: 100%;
+    }
+
+    .noticia img {
+        width: 100%;
+    }
+
+    .navegacion button {
+        padding: 5px;
+    }
+}
+
+@media (max-width: 480px) {
+    header h1 {
+        font-size: 1.5em;
+    }
+
+    nav ul li {
+        margin: 3px 0;
+    }
+
+    .navegacion button {
+        padding: 3px;
+        font-size: 0.8em;
+    }
 }
