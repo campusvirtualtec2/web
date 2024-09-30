@@ -38,18 +38,19 @@ nav ul li a {
     border-radius: 5px;
 }
 .boton-instagram {
-    display: inline-block;
-    bottom: 50%;  /* Ajusta según la distancia que quieras respecto al fondo */
-    right: 5%;
+    position: absolute; /* Asegúrate de que esté definido */
+    bottom: 15%; /* Ajusta según necesites */
+    left: 10%; /* Cambia 'right' a 'left' */
     padding: 10px 20px;
     font-size: 16px;
     color: white;
-    background-color: #c13584; /* Color típico de Instagram */
+    background-color: #c13584;
     border: none;
     border-radius: 5px;
     text-decoration: none;
     text-align: center;
-    }
+}
+
 
 main {
     padding: 20px;

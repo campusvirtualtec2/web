@@ -14,7 +14,7 @@ header h1 {
 /* Menú de navegación en la parte inferior derecha */
 nav {
     position: absolute; /* O "fixed" si quieres que se quede fijo al hacer scroll */
-    bottom: 82%;  /* Ajusta según la distancia que quieras respecto al fondo */
+    bottom: 77.5%;  /* Ajusta según la distancia que quieras respecto al fondo */
     right: 5%;   /* Ajusta según la distancia que quieras respecto a la derecha */
 }
 
@@ -37,7 +37,6 @@ nav ul li a {
     padding: 10px 20px;
     border-radius: 5px;
 }
-
 
 main {
     padding: 20px;
