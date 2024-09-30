@@ -6,65 +6,76 @@
     <title>Campus Virtual</title>
     <link rel="stylesheet" href="styles.css">
     <style>
-        /* Pantalla de carga */
-        #pantalla-carga {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(255, 255, 255, 0.9);
+        /* Estilos generales */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        /* Fondo con la imagen proporcionada */
+        body {
+            background-image: url('2.jpg');
+            background-size:94%;
+            background-position: center;
+            height: 120vh;
+        }
+
+       
+
+        /* Menú de navegación en la parte superior */
+        nav ul {
+            top: 10%;
+            list-style: none;
+            margin: 0;
+            padding: 100;
             display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 9999;
         }
 
-        /* Animación de crecimiento y reducción */
-        @keyframes agrandarAchicar {
-            0% {
-                transform: scale(2);
-            }
-            50% {
-                transform: scale(2.3); /* Aumentar el tamaño */
-            }
-            100% {
-                transform: scale(2); /* Volver al tamaño original */
-            }
+        nav ul li {
+            margin-right: 90px;
         }
 
-        #pantalla-carga img {
-            width: 150px;
-            animation: agrandarAchicar 2s infinite; /* Aplicar la animación */
+        nav ul li a {
+            text-decoration: none;
+            color: wh;
+            font-weight: bold;
         }
 
-        /* Otros estilos */
-        #informacion {
-            position: relative;
-            width: 100%;
-            max-width: 600px;
-            margin: auto;
+       
+
+        /* Contenedor para las noticias */
+        #panel-informativo {
+            position: absolute;
+            top: 42%;
+            right: 8%;
+            width: 480px;
+            height: 470px;
+            background-color: #8e8ef9;
+            color: white;
+            padding: 20px;
+            box-sizing: border-box;
+            border-radius: 0px;
+            overflow-y: scroll;
         }
+
         .noticia {
             display: none;
-            padding: 10px;
-            border: 3px solid #ccc;
-            border-radius: 5px;
-            background-color: #7187f3;
-            position: relative;
         }
+
         .noticia.active {
             display: block;
         }
+
         .navegacion {
-            position: absolute;
-            top: 50%;
-            width: 100%;
             display: flex;
             justify-content: space-between;
-            transform: translateY(-50%);
-            pointer-events: none;
+            position: absolute;
+            top: 90%;
+            right: 0%;
+            width: 100%;
         }
+
         .navegacion button {
             background-color: #007bff;
             color: white;
@@ -72,67 +83,46 @@
             padding: 10px;
             border-radius: 5px;
             cursor: pointer;
-            pointer-events: auto;
-            z-index: 10;
         }
 
-        #perfil {
-            display: none;
-            padding: 20px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            background-color: #f9f9f9;
-        }
     </style>
 </head>
 <body>
 
-    <!-- Pantalla de carga -->
-    <div id="pantalla-carga">
-        <img src="logocampus.png" alt="Logo Campus">
-    </div>
-
     <header>
-        <h1>Campus Virtual Escolar</h1>
+        <img src="logocampus.png" alt="Logo Campus" style="height: 0px;">
         <nav>
             <ul>
                 <li><a href="index.html">Inicio</a></li>
                 <li><a href="cursos.html">Especialidades</a></li>
                 <li><a href="contacto.html">Contacto</a></li>
                 <li><a href="calendario.html">Calendario</a></li>
-                
             </ul>
         </nav>
     </header>
-    <main>
-        <h2>Le damos la bienvenida al Campus Virtual</h2>
 
-        <!-- Panel Informativo -->
-        <section id="panel-informativo">
-            <div id="informacion" aria-live="polite">
-                <div class="noticia active">
-                    <img src="WhatsApp Image 2024-08-31 at 23.48.57.jpeg" alt="Presentación EnigmaTec2" style="width:50%;">
-                    <p>El día Viernes 30/08 los chicos del Proyecto EnigmaTec2 realizaron su primera presentación</p>
-                </div>
-                <div class="noticia">
-                    <img src="WhatsApp Image 2024-09-08 at 00.06.07.jpeg" alt="Presentación EnigmaTec2" style="width:50%;">
-                    <p>El día Jueves 05/09 los chicos del Proyecto EnigmaTec2 realizaron su segunda presentación en la Expo Joven realizada en el Instituto Santa Lucia</p>
-                </div>
-                <div class="noticia">
-                    <p>La correcaminatas se realizará el 13 de septiembre.</p>
-                </div>
+    <!-- Panel Informativo para las noticias -->
+    <section id="panel-informativo">
+        <div id="informacion" aria-live="polite">
+            <div class="noticia active">
+                <img src="WhatsApp Image 2024-08-31 at 23.48.57.jpeg" alt="Presentación EnigmaTec2" style="width:100%;">
+                <p>El día Viernes 30/08 los chicos del Proyecto EnigmaTec2 realizaron su primera presentación.</p>
             </div>
-            <div class="navegacion">
-                <button id="anterior" onclick="cambiarNoticia(-1)">&#10094; Anterior</button>
-                <button id="siguiente" onclick="cambiarNoticia(1)">Siguiente &#10095;</button>
+            <div class="noticia">
+                <img src="WhatsApp Image 2024-09-08 at 00.06.07.jpeg" alt="Presentación EnigmaTec2" style="width:100%;">
+                <p>El día Jueves 05/09 los chicos del Proyecto EnigmaTec2 realizaron su segunda presentación en la Expo Joven.</p>
             </div>
-        </section>
+            <div class="noticia">
+                <p>La correcaminatas se realizará el 13 de septiembre.</p>
+            </div>
+        </div>
 
-    </main>
-
-    <footer>
-        <p>&copy; 2024 Campus Virtual Escolar</p>
-    </footer>
+        <!-- Navegación de noticias -->
+        <div class="navegacion">
+            <button id="anterior" onclick="cambiarNoticia(-1)">&#10094; Anterior</button>
+            <button id="siguiente" onclick="cambiarNoticia(1)">Siguiente &#10095;</button>
+        </div>
+    </section>
 
     <script>
         let noticiaActual = 0;
@@ -164,94 +154,8 @@
             clearInterval(intervaloId);
         }
 
-        // Pantalla de carga
-        window.addEventListener("load", function() {
-            const pantallaCarga = document.getElementById('pantalla-carga');
-            
-            // Verificar si es la primera vez que se carga el index.html en la sesión
-            if (!sessionStorage.getItem('visitado')) {
-                detenerIntervalo(); // Detener el cambio automático de noticias
-
-                // Mantener la pantalla de carga visible al menos 3 segundos
-                setTimeout(function() {
-                    pantallaCarga.style.display = 'none'; // Ocultar la pantalla de carga
-                    iniciarIntervalo(); // Iniciar el cambio automático de noticias después de que desaparezca la pantalla de carga
-                    sessionStorage.setItem('visitado', 'true'); // Guardar en sessionStorage que ya se visitó
-                }, 5000); // 5000 milisegundos = 5 segundos
-            } else {
-                // Si ya se ha visitado, ocultar inmediatamente la pantalla de carga
-                pantallaCarga.style.display = 'none';
-            }
-        });
-
-        iniciarIntervalo(); // Iniciar el intervalo por defecto al cargar la página
-
-        const botonesNavegacion = document.querySelectorAll('.navegacion button');
-        botonesNavegacion.forEach(boton => {
-            boton.addEventListener('mouseover', detenerIntervalo);
-            boton.addEventListener('mouseout', iniciarIntervalo);
-        });
-
-        function mostrarPerfil() {
-            const usuarioConectado = true;
-            if (usuarioConectado) {
-                document.getElementById("perfil").style.display = 'block';
-                cargarDatosPerfil();
-            }
-        }
-
-        function cargarDatosPerfil() {
-            const modalidadSeleccionada = "Informática";
-            document.getElementById("modalidad").innerText = modalidadSeleccionada;
-
-            const cursoDropdown = document.getElementById("curso");
-            if (modalidadSeleccionada === "Informática") {
-                const option = document.createElement("option");
-                option.value = "6to10ma";
-                option.text = "6to10ma";
-                cursoDropdown.add(option);
-            }
-
-            cargarCalendario();
-        }
-
-        function cargarCalendario() {
-            document.getElementById("calendario").innerHTML = "<iframe src='https://calendar.google.com/calendar/embed?src=tu_correo%40gmail.com&ctz=America%2FArgentina%2FBuenos_Aires' style='border: 0' width='100%' height='600' frameborder='0' scrolling='no'></iframe>";
-        }
-
-        function actualizarHorarios() {
-            const cursoSeleccionado = document.getElementById("curso").value;
-            if (cursoSeleccionado === "6to10ma") {
-                document.getElementById("horarios").innerText = `
-                Lunes:
-                Lab. De S.O (12:50 a 17:00)
-                Literatura (17:30 a 19:10)
-                Sistemas Digitales (19:20 a 21:50)
-
-                Martes:
-                Lab. de Aplicaciones y Programación (12:50 a 17:00)
-                Investigación Operativa (17:30 a 18:20)
-                Matemáticas (18:20 a 20:10)
-
-                Miércoles:
-                Derechos del trabajo (17:30 a 19:10)
-                Investigación Operativa (19:20 a 21:00)
-                Seguridad Informática (21:00 a 21:50)
-
-                Jueves:
-                Ed. Fisica (12:50 a 14:50)
-                Arte (17:30 a 19:10)
-                Filosofía (19:20 a 21:00)
-
-                Viernes:
-                Lab. de Hardware (12:50 a 17:00)
-                Inglés (17:30 a 19:10)
-                Seguridad Informática (19:20 a 21:00)
-                `;
-            }
-        }
-
-        mostrarPerfil();
+        iniciarIntervalo();
     </script>
+
 </body>
 </html>

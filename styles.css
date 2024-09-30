@@ -5,33 +5,39 @@ body {
     padding: 0;
     background-color: #8e8ef9
 }
-header {
-    background-color:  #007bff;
-    color: rgb(255, 255, 255);
-    padding: 10px 0;
-    text-align: center;
-}
+
 
 header h1 {
     margin: 0;
 }
 
+/* Menú de navegación en la parte inferior derecha */
+nav {
+    position: absolute; /* O "fixed" si quieres que se quede fijo al hacer scroll */
+    bottom: 82%;  /* Ajusta según la distancia que quieras respecto al fondo */
+    right: 5%;   /* Ajusta según la distancia que quieras respecto a la derecha */
+}
+
 nav ul {
-    list-style-type: none;
-    padding: 0;
+    list-style: none;
     margin: 0;
-    display: flex;
-    justify-content: center;
+    padding: 0;
+    display: flex; /* Esto alinea los elementos del menú de forma horizontal */
+    flex-direction: row; /* Asegura que los items estén en fila */
 }
 
 nav ul li {
-    margin: 0 10px;
+    margin-right: 15px; /* Espaciado entre los elementos del menú */
 }
 
 nav ul li a {
-    color: white;
     text-decoration: none;
+    color: #e7d9d9;
+    font-weight: bold;
+    padding: 10px 20px;
+    border-radius: 5px;
 }
+
 
 main {
     padding: 20px;
